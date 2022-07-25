@@ -1,0 +1,90 @@
+```{r}
+library(tiddyverse)
+library(dplyr)
+```
+
+```{r}
+mech_df <- read.csv(file='MechaCar_mpg.csv',check.names=F,stringsAsFactors = F)
+head(mech_df)
+```
+```{r}
+regress <- lm(mpg ~ vehicle_length + vehicle_weight + spoiler_angle + ground_clearance + AWD, mech_df) #generate multiple linear regression model
+```
+
+```{r}
+summary(regress)
+```
+
+```{r}
+#del 2
+#import & read csv
+suspen_df <- read.csv(file='Suspension_Coil.csv',check.names=F,stringsAsFactors = F)
+head(suspen_df)
+
+```
+```{r}
+total_summary <-summarize(suspen_df, 'Mean' = mean(PSI), 'Median' = median(PSI), 'Variance' = var(PSI), 'Stanard Deviation' = sd(PSI))
+print(total_summary)
+
+```
+
+
+```{r}
+#2b -  use group_by to group manufacturing lot by the mean, median, variance, and standard deviation of the PSI column.
+
+lot_summary <- suspen_df %>% group_by(Manufacturing_Lot) %>% summarize('Mean' = mean(PSI), 'Median' = median(PSI), 'Variance' = var(PSI), 'Stanard Deviation' = sd(PSI))
+
+lot_summary
+
+```
+
+```{r}
+print(lot_summary[1,3])
+```
+
+```{r}
+#del 3 - t test 
+t.test(suspen_df$PSI, mu = 1500)
+
+```
+
+
+```{r}
+lot1 <- subset(suspen_df, Manufacturing_Lot == "Lot1")
+t.test(lot1$PSI, mu = 1500)
+
+```
+
+
+```{r}
+lot2 <- subset(suspen_df, Manufacturing_Lot == "Lot2")
+t.test(lot2$PSI, mu = 1500)
+```
+
+
+```{r}
+lot3 <- subset(suspen_df, Manufacturing_Lot == "Lot3")
+t.test(lot3$PSI, mu = 1500)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
